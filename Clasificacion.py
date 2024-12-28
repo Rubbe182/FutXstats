@@ -12,8 +12,12 @@ if uploaded_file:
     df = pd.read_csv(uploaded_file)
     
     # Mostrar todos los datos
-    st.write("Datos completos:")
-    st.dataframe(df)
+    #st.write("Datos completos:")
+    #st.dataframe(df)
+    if 'Squad' in df.columns:
+        df = df[df['Squad'].notna()]  # Eliminar filas con None en la columna 'Squad'
+    
+    df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
     
     # Verificar que la columna 'Competition' existe
     if 'Competition' in df.columns:
