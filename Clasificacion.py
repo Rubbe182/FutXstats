@@ -4,9 +4,6 @@ import pandas as pd
 # Título de la página
 st.title("Clasificación General")
 
-# URL del archivo CSV en GitHub
-csv_url = "https://raw.githubusercontent.com/tu-usuario/tu-repositorio/main/Classification.csv"  # Reemplaza con la URL correcta
-
 try:
     # Leer archivo CSV desde la URL
     df = pd.read_csv("Classification.csv")
@@ -18,8 +15,8 @@ try:
     df = df.loc[:, ~df.columns.str.contains('^Unnamed')]  # Eliminar columnas con 'Unnamed' en su nombre
     
     # Mostrar datos limpios
-    st.write("Datos completos (limpios):")
-    st.dataframe(df)
+    #st.write("Datos completos (limpios):")
+    #st.dataframe(df)
     
     # Verificar que la columna 'Competition' existe
     if 'Competition' in df.columns:
