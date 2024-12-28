@@ -9,7 +9,7 @@ csv_url = "https://raw.githubusercontent.com/tu-usuario/tu-repositorio/main/Clas
 
 try:
     # Leer archivo CSV desde la URL
-    df = pd.read_csv(csv_url)
+    df = pd.read_csv("Classification.csv")
     
     # Limpiar datos
     if 'Squad' in df.columns:
