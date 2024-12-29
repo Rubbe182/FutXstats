@@ -57,8 +57,8 @@ with tab2:
         df_schedule = df_schedule.loc[:, ~df_schedule.columns.str.contains('^Unnamed')]  # Eliminar columnas 'Unnamed'
         
         # Mostrar datos del calendario
-        st.write("Calendario completo:")
-        st.dataframe(df_schedule)
+        #st.write("Calendario completo:")
+        #st.dataframe(df_schedule)
         
         # Filtrar por equipo
         if 'Home' in df_schedule.columns and 'Away' in df_schedule.columns:
