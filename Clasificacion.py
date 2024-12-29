@@ -86,16 +86,34 @@ if page == "Clasificación y Calendario":
 elif page == "Bet Stats":
     st.title("Bet Stats")
     try:
-        # Cargar datos adicionales
-        df_extra = pd.read_csv("Bet_Report.csv")
+        # Cargar datos de Bet Stats
+        df_bet_stats = pd.read_csv("Bet_Report.csv")
         
-        # Limpiar datos adicionales
-        df_extra = df_extra.loc[:, ~df_extra.columns.str.contains('^Unnamed')]  # Eliminar columnas 'Unnamed'
-        
-        # Mostrar la tabla completa
-        st.write("Tabla de datos adicionales:")
-        st.dataframe(df_extra)
+        # Limpiar datos (opcional, dependiendo del formato del archivo)
+        df_bet_stats = df_bet_stats.loc[:, ~df_bet_stats.columns.str.contains('^Unnamed')]  # Eliminar columnas 'Unnamed'
+
+        # Verificar si la columna 'Team' existe
+        if 'Team' in df_bet_stats.columns:
+            # Obtener lista única de equipos
+            equipos = df_bet_stats['Team'].unique()
+            
+            # Crear filtros para seleccionar dos equipos
+            equipo1 = st.selectbox("Selecciona el primer equipo:", ["Selecciona un equipo"] + list(equipos), key="equipo1")
+            equipo2 = st.selectbox("Selecciona el segundo equipo:", ["Selecciona un equipo"] + list(equipos), key="equipo2")
+            
+            # Validar que ambos equipos hayan sido seleccionados
+            if equipo1 != "Selecciona un equipo" and equipo2 != "Selecciona un equipo":
+                df_compara = df_bet_stats[(df_bet_stats['Team'] == equipo1) | (df_bet_stats['Team'] == equipo2)]              
+                
+                st.write("Estadísticas:")
+                st.dataframe(df_compara)
+                
+            else:
+                st.info("Por favor, selecciona dos equipos para comparar.")
+        else:
+            st.error("El archivo no contiene la columna 'Team'.")
     except Exception as e:
-        st.error(f"Error al cargar el archivo de datos adicionales: {e}")
+        st.error(f"Error al cargar los datos: {e}")
+
 
 
