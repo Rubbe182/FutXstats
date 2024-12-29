@@ -85,6 +85,8 @@ if page == "Clasificación y Calendario":
 # Página Datos Adicionales
 elif page == "Bet Stats":
     st.title("Bet Stats")
+    elif page == "Bet Stats":
+    st.title("Bet Stats")
     try:
         # Cargar datos de Bet Stats
         df_bet_stats = pd.read_csv("Bet_Report.csv")
@@ -92,27 +94,38 @@ elif page == "Bet Stats":
         # Limpiar datos (opcional, dependiendo del formato del archivo)
         df_bet_stats = df_bet_stats.loc[:, ~df_bet_stats.columns.str.contains('^Unnamed')]  # Eliminar columnas 'Unnamed'
 
-        # Verificar si la columna 'Team' existe
-        if 'Squad' in df_bet_stats.columns:
-            # Obtener lista única de equipos
-            equipos = df_bet_stats['Squad'].unique()
-            
-            # Crear filtros para seleccionar dos equipos
-            equipo1 = st.selectbox("Selecciona el primer equipo:", ["Selecciona un equipo"] + list(equipos), key="equipo1")
-            equipo2 = st.selectbox("Selecciona el segundo equipo:", ["Selecciona un equipo"] + list(equipos), key="equipo2")
-            
-            # Validar que ambos equipos hayan sido seleccionados
-            if equipo1 != "Selecciona un equipo" and equipo2 != "Selecciona un equipo":
-                df_compara = df_bet_stats[(df_bet_stats['Squad'] == equipo1) | (df_bet_stats['Squad'] == equipo2)]              
+        # Seleccionar modo: Ver todo o filtrar por equipos
+        modo = st.radio("Selecciona el modo de visualización:", ["Ver todas las estadísticas", "Filtrar por equipos"])
+
+        if modo == "Ver todas las estadísticas":
+            # Mostrar todo el DataFrame
+            st.write("Estadísticas completas:")
+            st.dataframe(df_bet_stats)
+
+        elif modo == "Filtrar por equipos":
+            # Verificar si la columna 'Team' existe
+            if 'Team' in df_bet_stats.columns:
+                # Obtener lista única de equipos
+                equipos = df_bet_stats['Team'].unique()
                 
-                st.write("Estadísticas:")
-                st.dataframe(df_compara)
+                # Crear filtros para seleccionar dos equipos
+                equipo1 = st.selectbox("Selecciona el primer equipo:", ["Selecciona un equipo"] + list(equipos), key="equipo1")
+                equipo2 = st.selectbox("Selecciona el segundo equipo:", ["Selecciona un equipo"] + list(equipos), key="equipo2")
                 
+                # Validar que ambos equipos hayan sido seleccionados
+                if equipo1 != "Selecciona un equipo" and equipo2 != "Selecciona un equipo":
+                    # Filtrar datos para los equipos seleccionados
+                    df_compara = df_bet_stats[(df_bet_stats['Team'] == equipo1) | (df_bet_stats['Team'] == equipo2)]
+                  
+                    # Mostrar los datos comparados
+                    st.write("Comparación de Estadísticas:")
+                    st.dataframe(df_compara)
+                else:
+                    st.info("Por favor, selecciona dos equipos para comparar.")
             else:
-                st.info("Por favor, selecciona dos equipos para comparar.")
-        else:
-            st.error("El archivo no contiene la columna 'Squad'.")
+                st.error("El archivo no contiene la columna 'Team'.")
     except Exception as e:
         st.error(f"Error al cargar los datos: {e}")
+
 
 
