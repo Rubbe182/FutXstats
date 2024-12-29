@@ -20,6 +20,9 @@ with tab1:
         if 'Squad' in df_classification.columns:
             df_classification = df_classification[df_classification['Squad'].notna()]  # Eliminar filas con None en 'Squad'
         df_classification = df_classification.loc[:, ~df_classification.columns.str.contains('^Unnamed')]  # Eliminar columnas 'Unnamed'
+        df_classification = df_classification.rename(columns={'xG':'xG_h','xG.1':'xG_a'})
+        df_classification = df_classification[['Wk', 'Day', 'Date', 'Time', 'Home', 'xG', 'Score','xG.1', 'Away','Attendance', 
+                                               'Venue', 'Referee','Competition']]
         
         # Mostrar datos limpios
         #st.write("Datos completos (limpios):")
@@ -57,8 +60,8 @@ with tab2:
         df_schedule = df_schedule.loc[:, ~df_schedule.columns.str.contains('^Unnamed')]  # Eliminar columnas 'Unnamed'
         
         # Mostrar datos del calendario
-        #st.write("Calendario completo:")
-        #st.dataframe(df_schedule)
+        st.write("Calendario completo:")
+        st.dataframe(df_schedule)
         
         # Filtrar por equipo
         if 'Home' in df_schedule.columns and 'Away' in df_schedule.columns:
@@ -82,5 +85,6 @@ with tab2:
         else:
             st.error("El archivo de calendario no contiene las columnas 'Home' y 'Away'.")
     except Exception as e:
+        st.error(f"Error al cargar el archivo de calendario: {e}")
         st.error(f"Error al cargar el archivo de calendario: {e}")
 
