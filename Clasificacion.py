@@ -93,9 +93,9 @@ elif page == "Bet Stats":
         df_bet_stats = df_bet_stats.loc[:, ~df_bet_stats.columns.str.contains('^Unnamed')]  # Eliminar columnas 'Unnamed'
 
         # Verificar si la columna 'Team' existe
-        if 'Team' in df_bet_stats.columns:
+        if 'Squad' in df_bet_stats.columns:
             # Obtener lista única de equipos
-            equipos = df_bet_stats['Team'].unique()
+            equipos = df_bet_stats['Squad'].unique()
             
             # Crear filtros para seleccionar dos equipos
             equipo1 = st.selectbox("Selecciona el primer equipo:", ["Selecciona un equipo"] + list(equipos), key="equipo1")
@@ -103,7 +103,7 @@ elif page == "Bet Stats":
             
             # Validar que ambos equipos hayan sido seleccionados
             if equipo1 != "Selecciona un equipo" and equipo2 != "Selecciona un equipo":
-                df_compara = df_bet_stats[(df_bet_stats['Team'] == equipo1) | (df_bet_stats['Team'] == equipo2)]              
+                df_compara = df_bet_stats[(df_bet_stats['Squad'] == equipo1) | (df_bet_stats['Squad'] == equipo2)]              
                 
                 st.write("Estadísticas:")
                 st.dataframe(df_compara)
@@ -111,9 +111,8 @@ elif page == "Bet Stats":
             else:
                 st.info("Por favor, selecciona dos equipos para comparar.")
         else:
-            st.error("El archivo no contiene la columna 'Team'.")
+            st.error("El archivo no contiene la columna 'Squad'.")
     except Exception as e:
         st.error(f"Error al cargar los datos: {e}")
-
 
 
