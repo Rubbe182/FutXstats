@@ -85,8 +85,6 @@ if page == "Clasificación y Calendario":
 # Página Datos Adicionales
 elif page == "Bet Stats":
     st.title("Bet Stats")
-    elif page == "Bet Stats":
-    st.title("Bet Stats")
     try:
         # Cargar datos de Bet Stats
         df_bet_stats = pd.read_csv("Bet_Report.csv")
