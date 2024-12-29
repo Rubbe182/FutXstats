@@ -56,7 +56,7 @@ with tab2:
         df_schedule = df_schedule[df_schedule['Home'].notna()]
         df_schedule = df_schedule.loc[:, ~df_schedule.columns.str.contains('^Unnamed')]  # Eliminar columnas 'Unnamed'
         df_schedule = df_schedule.rename(columns={'xG':'xG_h','xG.1':'xG_a'})
-        df_schedule = df_schedule[['Wk', 'Day', 'Date', 'Time', 'Home', 'xG', 'Score','xG.1', 'Away','Attendance', 
+        df_schedule = df_schedule[['Wk', 'Day', 'Date', 'Time', 'Home', 'xG_h', 'Score','xG_a', 'Away','Attendance', 
                                                'Venue', 'Referee','Competition']]
         
         # Mostrar datos del calendario
