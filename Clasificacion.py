@@ -102,7 +102,7 @@ elif page == "Bet Stats":
 
         elif modo == "Filtrar por equipos":
             # Verificar si la columna 'Team' existe
-            if 'Team' in df_bet_stats.columns:
+            if 'Squad' in df_bet_stats.columns:
                 # Obtener lista única de equipos
                 equipos = df_bet_stats['Squad'].unique()
                 
